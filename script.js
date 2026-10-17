@@ -1,66 +1,36 @@
 (function () {
-  // ─── CARD HOVER MICRO ───
-  document.querySelectorAll(".clay-card").forEach((card) => {
-    card.addEventListener("mousemove", (e) => {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      gsap.to(card, {
-        rotateY: x * 4,
-        rotateX: -y * 4,
-        duration: 0.5,
-        ease: "power2.out",
-        transformPerspective: 900
-      });
-    });
-    card.addEventListener("mouseleave", () => {
-      gsap.to(card, {
-        rotateY: 0,
-        rotateX: 0,
-        duration: 0.7,
-        ease: "elastic.out(1,.6)"
-      });
-    });
-  });
-  // ─── HEADER NAV PILL: animated indicator ───
-  const pills = document.querySelectorAll(".nav-pill");
-  pills.forEach((p) => {
-    p.addEventListener("click", (e) => {
+  var items = document.querySelectorAll(".res-item");
+  items.forEach(function (item) {
+    item.addEventListener("click", function (e) {
       e.preventDefault();
-      pills.forEach((x) => x.classList.remove("active"));
-      p.classList.add("active");
-    });
-  });
-  // Magnetic effect on header CTA
-  const cta = document.querySelector(".header-cta");
-  if (cta && !window.matchMedia("(pointer: coarse)").matches) {
-    cta.addEventListener("mousemove", (e) => {
-      const r = cta.getBoundingClientRect();
-      const x = (e.clientX - r.left - r.width / 2) / r.width;
-      const y = (e.clientY - r.top - r.height / 2) / r.height;
-      gsap.to(cta, {
-        x: x * 6,
-        y: y * 6,
-        duration: 0.4,
-        ease: "power2.out"
-      });
-    });
-    cta.addEventListener("mouseleave", () => {
-      gsap.to(cta, {
-        x: 0,
-        y: 0,
-        duration: 0.6,
-        ease: "elastic.out(1,.5)"
-      });
-    });
-  }
-  // Resource list: change active on click
-  const resItems = document.querySelectorAll(".res-item");
-  resItems.forEach((item) => {
-    item.addEventListener("click", (e) => {
-      e.preventDefault();
-      resItems.forEach((r) => r.classList.remove("active"));
+      items.forEach(function (r) { r.classList.remove("active"); });
       item.classList.add("active");
     });
+  });
+})();
+(function () {
+  var c = document.querySelector(".photo-post");
+  if (!c) return;
+  var like = c.querySelector(".act-like"), cnt = c.querySelector(".like-count"), liked = false, n = 0;
+  like.addEventListener("click", function () {
+    liked = !liked; n += liked ? 1 : -1; cnt.textContent = n;
+    like.style.color = liked ? "#e0566b" : "";
+    like.querySelector("svg").style.fill = liked ? "#e0566b" : "none";
+  });
+  var box = c.querySelector(".comment-box"), inp = c.querySelector(".comment-input"), list = c.querySelector(".comment-list");
+  c.querySelector(".act-comment").addEventListener("click", function () {
+    box.style.display = box.style.display === "none" ? "block" : "none";
+    if (box.style.display === "block") inp.focus();
+  });
+  function send() {
+    var t = inp.value.trim(); if (!t) return;
+    var d = document.createElement("div"); d.textContent = t; list.appendChild(d); inp.value = "";
+  }
+  c.querySelector(".comment-send").addEventListener("click", send);
+  inp.addEventListener("keydown", function (e) { if (e.key === "Enter") send(); });
+  c.querySelector(".act-share").addEventListener("click", function () {
+    var url = location.href;
+    if (navigator.share) { navigator.share({ title: document.title, url: url }).catch(function () {}); }
+    else if (navigator.clipboard) { navigator.clipboard.writeText(url).then(function () { alert("लिंक कपी भयो"); }); }
   });
 })();

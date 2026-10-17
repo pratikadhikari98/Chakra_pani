@@ -1024,3 +1024,5 @@ img {
 .wave-wrap svg{width:100%;height:auto;display:block;transform-origin:center}
 :root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 .title,.title-line .word{line-height:1.12}
+
+*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}

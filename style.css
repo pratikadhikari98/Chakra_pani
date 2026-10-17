@@ -330,7 +330,7 @@ img {
 .hero {
   position: relative;
   z-index: 5;
-  padding: 60px 0 40px;
+  padding: 8px 0 0;
 }
 
 .eyebrow {
@@ -542,7 +542,7 @@ img {
 .resource-list {
   position: relative;
   z-index: 4;
-  margin: 80px 0 30px;
+  margin: 0 0 30px;
   margin-left: auto;
   max-width: 360px;
 }
